@@ -1,0 +1,46 @@
+<div class="container-fluid vh-100">
+    <div class="row" style="height: inherit;">
+        <div class="col-12 col-sm-6 d-flex flex-column justify-content-center align-items-start px-4" id="bg">
+            <h3 class="text-white text-uppercase m-0 mb-1">Welcome Back Admin</h3>
+            <p class="m-0 text-white h5">Existing Administrator Dashboard</p>
+            <ul class="list-group mt-5 text-white" style="list-style-type: none; margin: 0; padding: 0;">
+                <li>Manage Orders and Menu Cuisines</li>
+                <li>Login is necessary to be able to perform maintenance</li>
+                <li>Eat, Pray, Love</li>
+            </ul>
+        </div>
+        <div class="col-12 col-sm-6 d-flex flex-column justify-content-center align-items-center">
+            <div class="card w-75 shadow-sm">
+                <div class="card-header bg-white border-0">
+                    <h3 class="text-center m-0">Login</h3>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="loginForm" (ngSubmit)="loginAdmin()">
+                        <div class="form-group col-12 mt-2">
+                            <label for="email">Email address</label>
+                            <input type="email" class="form-control" name="email" autocomplete="off"
+                                formControlName="email" aria-describedby="email" placeholder="eg: abc@example.com"
+                                required>
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                                else.</small>
+                        </div>
+                        <div class="form-group col-12 mt-2">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" autocomplete="off" name="password"
+                                formControlName="password" placeholder="Enter your password" required>
+                        </div>
+                        <!--p class="alert alert-danger text-center h6 mt-2" *ngIf="errorMsg !== undefined"> {{ errorMsg }}
+                        </p> -->
+                        <div class="form-group form-check ">
+                            <input type="checkbox" class="form-check-input" id="remember" required>
+                            <label class="form-check-label" for="remember">Remember me</label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a routerLink="/register" style="text-decoration:none;">Sign Up?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

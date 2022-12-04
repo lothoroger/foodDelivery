@@ -1,0 +1,36 @@
+[
+    {
+        "categoryId": 1,
+        "categoryName": "Japanese",
+        "categoryDescription": "Sushi",
+        "categoryImageUrl": "sushi",
+        "categoryPrice": 9.50,
+        "active": true,
+        "addedOn": "10 August 2020"
+    },
+    {
+        "categoryId": 2,
+        "categoryName": "Indian",
+        "categoryDescription": "Samosa",
+        "categoryImageUrl": "samosa",
+        "categoryPrice": 12.50,
+        "active": false,
+        "addedOn": "11 August 2020"
+    },
+    {
+        "categoryId": 3,
+        "categoryName": "Filipino",
+        "categoryDescription": "Lumpia",
+        "categoryImageUrl": "lumpia",
+        "active": true,
+        "addedOn": "11 November 2020"
+    },
+    {
+        "categoryId": 4,
+        "categoryName": "Italian",
+        "categoryDescription": "Pizza",
+        "categoryImageUrl": "pizza",
+        "active": true,
+        "addedOn": "11 December 2022"
+    }
+]

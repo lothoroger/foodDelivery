@@ -1,0 +1,106 @@
+[
+    {
+        "productId": 1,
+        "productTitle": "Italian Cuisine",
+        "productDescription": "Pizza",
+        "productOrigin": "European - Italian",
+        "active": true,
+        "productCategory": {
+            "categoryId": 4,
+            "categoryCode": "ITL-P-01",
+            "categoryName": "Italian",
+            "categoryDescription": "Pizza",
+            "categoryImageUrl": "pizza",
+            "categoryPrice": 20.55,
+            "active": true,
+            "addedOn": "11 December 2022"
+        },
+        "productCode": "PRD-ELE-1054",
+        "images": [
+            "https://m.media-amazon.com/images/I/71J4Q8zM72L._SX466_.jpg",
+            "https://m.media-amazon.com/images/I/71J4Q8zM72L._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/71J4Q8zM72L._SX355_.jpg",
+            "https://m.media-amazon.com/images/I/71J4Q8zM72L._SX522_.jpg",
+            "https://m.media-amazon.com/images/I/71J4Q8zM72L._SX450_.jpg",
+            "https://m.media-amazon.com/images/I/71J4Q8zM72L._SX425_.jpg",
+            "https://m.media-amazon.com/images/I/71J4Q8zM72L._SX569_.jpg"
+        ],
+        "thumbnailImage": 0,
+        "price": 20.55,
+        "addedOn": "30 November 2021",
+        "rating": 4
+    },
+    {
+        "productId": 2,
+        "productTitle": "Japanese Menu",
+        "productDescription": "Sushi",
+        "productOrigin": "Asian - Japanese",
+        "active": true,
+        "productCategory": {
+            "categoryId": 1,
+            "categoryName": "Japanese",
+            "categoryCode": "JPN-S-01",
+            "categoryDescription": "Sushi",
+            "categoryImageUrl": "sushi",
+            "active": true,
+            "categoryPrice": 12.85,
+            "addedOn": "10 August 2020"
+        },
+        "productCode": "PRI-ELE-1054",
+        "images": [
+            "/src/assets/images/sushi.jpg"
+        ],
+        "thumbnailImage": 0,
+        "price": 12.85,
+        "addedOn": "01 November 2021",
+        "rating": 4.5
+    },
+    {
+        "productId": 3,
+        "productTitle": "Filipino Menu",
+        "productDescription": "Lumpia",
+        "productOrigin": "Asian - Filipino",
+        "active": false,
+        "productCategory": {
+            "categoryId": 1,
+            "categoryName": "Philippines",
+            "categoryCode": "PHL-L-01",
+            "categoryDescription": "Lumpia",
+            "categoryImageUrl": "lumpia",
+            "active": false,
+            "categoryPrice": 7.43,
+            "addedOn": "10 October 2021"
+        },
+        "productCode": "PRI-ELE-1054",
+        "images": [
+            "https://m.media-amazon.com/images/I/61UdeL7aO-L._AC_SX679_.jpg",
+            "https://m.media-amazon.com/images/I/61UdeL7aO-L._AC_SL1500_.jpg",
+            "https://m.media-amazon.com/images/I/61UdeL7aO-L._AC_SX679_.jpg",
+            "https://m.media-amazon.com/images/I/61UdeL7aO-L._AC_SX569_.jpg",
+            "https://m.media-amazon.com/images/I/61UdeL7aO-L._AC_SX569_.jpg",
+            "https://m.media-amazon.com/images/I/61UdeL7aO-L._AC_SX569_.jpg",
+            "https://m.media-amazon.com/images/I/61UdeL7aO-L._AC_SX569_.jpg"
+        ],
+        "thumbnailImage": 0,
+        "price": 7.43,
+        "addedOn": "01 November 2021",
+        "rating": 4.5
+    },
+    {
+        "productId": 5,
+        "productTitle": "Indian Menu",
+        "productDescription": "Samosa",
+        "productOrigin": "East Asia - Indian",
+        "active": false,
+        "productCategory": {
+            "categoryId": "5",
+            "categoryName": "Samosa",
+            "categoryCode": "IND-S-07",
+            "categoryDescription": "Samosa",
+            "categoryImageUrl": "samosa",
+            "active": true,
+            "categoryPrice": 9.45,
+            "addedOn": "10 December 2021"
+        }
+    }
+]

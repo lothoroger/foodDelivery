@@ -1,0 +1,11 @@
+td img {
+    height: 12rem;
+    width: 12rem;
+    border: 1px solid whitesmoke;
+    border-radius: 1rem;
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: #0c0d3d;
+}

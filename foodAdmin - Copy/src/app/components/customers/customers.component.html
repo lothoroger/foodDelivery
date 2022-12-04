@@ -1,0 +1,195 @@
+<div class="container-fluid py-3">
+    <div class="row w-100 m-0">
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white border-0">
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <h4>Food Delivery Customers</h4>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="d-flex justify-content-end align-items-center">
+                                <!--   <button class="btn btn-dark mr-1" (click)="openModal(productModal)">Add
+                                    Customer</button> -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-flush m-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Password</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">City</th>
+                                <th scope="col">State</th>
+                                <th scope="col">Zip</th>
+                                <th scope="col">Orders</th>
+                                <th scope="col">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let cust of customers">
+
+                                <th scope="row">1</th>
+                                <td> {{ cust["firstname"] }}</td>
+                                <td> {{ cust["lastname"] }} </td>
+                                <td> {{ cust["email"] }} </td>
+                                <td> {{ cust["password"] }} </td>
+                                <td> {{ cust["phone"] }} </td>
+                                <td> {{ cust["address"] }}</td>
+                                <td> {{ cust["city"] }} </td>
+                                <td> {{ cust["state"] }} </td>
+                                <td> {{ cust["zip"] }} </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-dark">View Orders</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary">Update Customer</button>
+                                    &nbsp;&nbsp; <button type="button" class="btn btn-sm btn-warning">Delete
+                                        Customer</button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+
+<ng-template #productModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Customer {{ 'updation' ? 'Update' : 'Creation' }}</h4>
+        <button type="button" class="btn-close" aria-label="Close" id="closeAddNewStaffModal" #closeAddNewStaffModal
+            (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form [formGroup]="customerForm" ngNativeValidate>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12 col-sm-4">
+                    <div class="form-group m-0 mb-2">
+                        <label for="name" class="text-sm">First Name</label>
+                        <input type="text" name="customerFirstName" formControlName="customerFirstName"
+                            class="form-control" placeholder="firstName" required>
+                    </div>
+                    <div class="form-group m-0 mb-2">
+                        <label for="name" class="text-sm">Last Name</label>
+                        <input type="text" name="customerLastName" formControlName="customerLastName"
+                            class="form-control" placeholder="lastName" required>
+                    </div>
+                    <div class="form-group m-0 mb-2">
+                        <label for="name" class="text-sm">eMail</label>
+                        <input type="text" name="customerEmail" formControlName="customerEmail" class="form-control"
+                            placeholder="e@gmail.com" required>
+                    </div>
+                    <div class="form-group m-0 mb-2">
+                        <label for="name" class="text-sm">Password</label>
+                        <input type="text" name="customerPassword" formControlName="customerPassword"
+                            class="form-control" placeholder="" required>
+                    </div>
+                    <div class="form-group m-0 mb-2">
+                        <label for="name" class="text-sm">Phone</label>
+                        <input type="text" name="customerPhone" formControlName="customerPhone" class="form-control"
+                            placeholder="(555) 555-5555" required>
+                    </div>
+                    <div class="form-group m-0 mb-2">
+                        <label for="status" class="text-sm">Active status</label><br>
+                        <div id="status" class="btn-group btn-group-toggle" ngbRadioGroup>
+                            <label ngbButtonLabel class="btn-primary btn-sm mr-2">
+                                <input ngbButton type="radio" class="btn-check " [value]="true" formControlName="active"
+                                    name="active">Active
+                            </label>
+                            <label ngbButtonLabel class="btn-danger btn-sm">
+                                <input ngbButton type="radio" class="btn-check" [value]="false" formControlName="active"
+                                    name="active">InActive
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-8">
+                    <div class="form-group m-0 mb-2">
+                        <label for="description" class="text-sm">Delivery Address:</label>
+                        <div class="form-group m-0 mb-2">
+                            <label for="address" class="text-sm">Address</label>
+                            <input type="text" name="customerAddress" formControlName="customerAddress"
+                                class="form-control" placeholder="address" required>
+                        </div>
+                        <div class="form-group m-0 mb-2">
+                            <label for="city" class="text-sm">City</label>
+                            <input type="text" name="customerCity" formControlName="customerCity" class="form-control"
+                                placeholder="" required>
+                        </div>
+                        <div class="form-group m-0 mb-2">
+                            <label for="state" class="text-sm">State</label>
+                            <input type="text" name="customerState" formControlName="customerState" class="form-control"
+                                placeholder="" required>
+                        </div>
+                        <div class="form-group m-0 mb-2">
+                            <label for="zip" class="text-sm">ZipCode</label>
+                            <input type="text" name="customerZip" formControlName="customerZip" class="form-control"
+                                placeholder="" required>
+                        </div>
+                    </div>
+                 
+                    <div class="col-12 px-0">
+
+                        <div class="row mt-2" *ngIf="tempImageFiles.length == 0">
+                            <div class="col-12" style="height: 40px;">
+                                <div class="d-flex flex-column align-items-center justify-content-center">
+                                    <span class="material-icons" style="font-size: 26px;">warning</span>
+                                    <h4 class="m-0 mt-1">No Images</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3" *ngIf="tempImageFiles.length != 0">
+                            <div class="col-12 my-2" *ngFor="let imageFile of tempImageFiles; index as idx">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex flex-column">
+                                        <p class="m-0 mb-1">
+                                            <strong>{{ idx + 1 }}</strong>.
+                                            {{ imageFile.name || imageFile }}
+                                        </p>
+                                        <span *ngIf="customerForm.get('thumbnailImage')?.value === idx"
+                                            class="text-sm text-muted">
+                                            Selected as Thumnail Image
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-sm" (click)="modal.dismiss('')">
+                Cancel
+            </button>
+            <button type="submit" class="btn btn-dark btn-sm" [disabled]="loader">
+                Save
+                <span *ngIf="loader">&nbsp;</span>
+                <div *ngIf="loader" class="spinner-border spinner-border-sm text-white" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </button>
+        </div>
+    </form>
+</ng-template> -->

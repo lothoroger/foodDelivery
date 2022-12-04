@@ -68,6 +68,7 @@ li .remove-button:hover {
     cursor: pointer;
 }
 
+
 .checkout {
     display: flex;
     flex-direction: column;
@@ -104,6 +105,16 @@ li .remove-button:hover {
     content: 'Price: ';
     color: grey;
 }
+
+
+.corder {
+
+
+    opacity: 0.7;
+
+
+}
+
 
 .checkout a {
     padding: 1rem;

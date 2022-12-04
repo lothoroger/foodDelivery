@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FoodService } from 'src/app/services/food.service';
 import { Food } from 'src/app/models/Food';
 import { CartService } from 'src/app/services/cart.service';
+import { Observable } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
+import { DbService } from 'src/app/services/db.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-order',
@@ -12,25 +15,27 @@ import { CartService } from 'src/app/services/cart.service';
 
 export class OrderComponent implements OnInit {
 
-  foods: Food[] = [];
-  food!: Food;
+  constructor(private httpClient: HttpClientModule, private foodService: DbService, private cartService: CartService, private router: Router) { }
 
-  constructor(private foodService: FoodService, activatedRoute: ActivatedRoute, private cartService: CartService, private router: Router) {
-    activatedRoute.params.subscribe((params) => {
-      this.foods = foodService.getAll();
-    })
-    activatedRoute.params.subscribe((params) => {
-      if (params.id)
-        this.food = foodService.getFoodById(params.id);
-    })
 
-  }
-  addToCart() {
-    this.cartService.addToCart(this.food);
-    this.router.navigateByUrl('/cart');
-  }
+  foodForm: FormGroup = new FormGroup({});
+  foodlist: Food[] = [];
+  updation: boolean = false;
+  loader: boolean = false;
+
   ngOnInit(): void {
+    this.foodService.getFoods();
+    this.foodService.foodSub.subscribe((data) => {
+      if (data.length !== 0) this.foodlist = data;
+
+    })
   }
+
+  /*
+    addToCart() {
+      this.cartService.addToCart(this.food);
+      this.router.navigateByUrl('/cart');
+    } */
 
 }
 

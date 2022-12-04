@@ -15,7 +15,7 @@ export class CartService {
 
   addToCart(food: Food): void {
     let cartItem = this.cart.items
-      .find(item => item.food.id === food.id);
+      .find(item => item.food.foodId === food.foodId);
     if (cartItem)
       return;
 
@@ -25,13 +25,13 @@ export class CartService {
 
   removeFromCart(foodId: string): void {
     this.cart.items = this.cart.items
-      .filter(item => item.food.id != foodId);
+      .filter(item => item.food.foodId != foodId);
     this.setCartToLocalStorage();
   }
 
   changeQuantity(foodId: string, quantity: number) {
     let cartItem = this.cart.items
-      .find(item => item.food.id === foodId);
+      .find(item => item.food.foodId === foodId);
     if (!cartItem) return;
 
     cartItem.quantity = quantity;

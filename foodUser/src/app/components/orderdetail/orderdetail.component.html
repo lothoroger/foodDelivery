@@ -1,17 +1,18 @@
-<div *ngIf="food.id" class="container">
-    <img [src]="food.imageUrl" [alt]="food.name" />
+<!--
+<div *ngIf="foodId" class="container">
+    <img [src]="food.imageurl" [alt]="food.name" />
 
     <div class="details">
         <div class="header">
             <span class="name">
                 {{food.name}}
             </span>
-            <span class="favorite {{food.favorite? '': 'not'}}">❤</span>
+            <span>❤</span>
         </div>
 
 
         <div class="origins">
-            <span *ngFor="let origin of food.origins">
+            <span *ngFor="let origin of food.origin">
                 {{origin}}
             </span>
         </div>
@@ -20,7 +21,7 @@
 
         <div class="cook-time">
             <span>
-                Time to cook about <strong>{{food.cookTime}}</strong> minutes
+                Time to cook about <strong>10 - 45 mins.</strong> minutes
             </span>
         </div>
 
@@ -31,6 +32,7 @@
         </div>
 
         <button (click)="addToCart()">Add To Cart</button>
+        <p class="corder"><a routerLink="/order">Back</a></p>
 
     </div>
-</div>
+</div>-->

@@ -11,7 +11,7 @@
                         <ul>
                             <li *ngFor="let cartItem of cart.items">
                                 <div>
-                                    <img [src]="cartItem.food.imageUrl" [alt]="cartItem.food.name">
+                                    <img [src]="cartItem.food.imageurl" [alt]="cartItem.food.name">
                                 </div>
                                 <div>
                                     {{cartItem.food.name}}
@@ -44,7 +44,8 @@
                                 <div class="total-price">{{cart.totalPrice|currency}}</div>
                             </div>
 
-                            <a routerLink="/payment">Proceed to Checkout</a>
+                            <p class="corder"><a routerLink="/order">Continue to Order</a></p>
+                            <p><a routerLink="/payment">Proceed to Checkout</a></p>
                         </div>
                     </div>
 

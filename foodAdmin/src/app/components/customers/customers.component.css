@@ -1,0 +1,12 @@
+.cuisineImage {
+
+    border-radius: 1rem;
+}
+
+.modal.in .modal-dialog {
+    transform: translate3d(0, 0, 0);
+}
+
+.text-sm {
+    color: darkgrey;
+}
