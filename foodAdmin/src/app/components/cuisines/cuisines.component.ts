@@ -38,15 +38,14 @@ export class CuisinesComponent implements OnInit {
 
 
 
-  openModal(modal: any, foodObj = null) {
+  openModal(modal: any, foodObj: Food | null = null) {
     console.log('FoodObj', foodObj);
-    this.initialForm();
     //this.tempImageFiles = [];
-    // this.initialiseModal(fod);
+    this.initializeModal(foodObj);
     this.modalService.open(modal);
   }
 
-  initialForm(foodObj: any = null) {
+  initializeModal(foodObj: Food | null) {
     if (foodObj == null) {
       this.foodForm = this.fb.group({
         name: ["", Validators.required],
@@ -63,7 +62,7 @@ export class CuisinesComponent implements OnInit {
         price: [foodObj.price, Validators.required],
         stock: [foodObj.stock],
         addedon: [foodObj.addedon, Validators.required],
-        imagurl: [foodObj.imageurl],
+        imageurl: [foodObj.imageurl] + '.jpg',
       });
 
 
@@ -95,41 +94,7 @@ viewProductDetails(modal: any, productObj: Products) {
   this.modalService.open(modal, { size: 'lg' });
 }
  
- 
-initialiseModal(productObj: Products | null) {
-  if (productObj == null) {
-    this.updation = false;
-    this.productForm = this.fb.group({
-      productId: [],
-      productTitle: [null],
-      price: [null],
-      images: this.fb.array([]),
-      thumbnailImage: [null],
-      productDescription: [null],
-      productCategory: [null],
-      active: [true],
-      addedOn: [],
-      rating: [0]
-    });
-  } else {
-    this.updation = true;
-    this.productForm = this.fb.group({
-      productId: [productObj.productId],
-      productTitle: [productObj.productTitle],
-      price: [productObj.price],
-      images: [productObj.images],
-      thumbnailImage: [productObj.thumbnailImage],
-      productDescription: [productObj.productDescription],
-      productCategory: [productObj.productCategory],
-      active: [productObj.active],
-      addedOn: [productObj.addedOn],
-      rating: [productObj.rating]
-    });
-    this.onSelectOption(productObj.productCategory);
-    this.tempImageFiles = productObj.images || [];
-  }
-}
- 
+
 onSelectOption(category: Category | Event | undefined) {
   // this.productForm.patchValue({
   //   category: this.categories.find(x => x.categoryId === category.categoryId)

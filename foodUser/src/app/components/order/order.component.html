@@ -44,36 +44,30 @@
             <ul>
                 <li *ngFor="let food of foodlist">
 
-                    <a routerLink="/orderdetail/{{food.foodId}}">
-
-                        <img src="assets/images/{{food.imageurl}}.jpg" alt="{{food.imageurl}}" />
-                        <div class="content">
-                            <div class="name">
-                                {{food.name}}
-                            </div>
-                            <span>
-                                ❤
-                            </span>
-
-                            <div class="product-item-footer">
-                                <div class="origins">
-                                    <span>
-                                        {{food.origin}}
-                                    </span>
-                                </div>
-
-                                <div class="cook-time">
-                                    <span>🕒</span>
-                                    10-45 mins.
-                                </div>
-                            </div>
-                            <b>ORDER:</b>
-                            <span class="price">&nbsp;
-                                ${{food.price}}
-                            </span>
-
+                    <img src="/assets/images/{{ food['imageurl'] }}.jpg">
+                    <div class="content">
+                        <div class="name">
+                            {{food.name}}
                         </div>
-                    </a>
+                        <div class="product-item-footer">
+                            <div class="origins">
+                                <span>
+                                    {{food.origin}}
+                                </span>
+                            </div>
+
+                            <div class="cook-time">
+                                <span>🕒</span>
+                                10-45 mins.
+                            </div>
+                        </div>
+                        <b>ORDER:</b>
+                        <span class="price">&nbsp;
+                            ${{food.price}}
+                        </span>
+
+                    </div>
+                    <p><button class="btn btn-primary me-1" (click)="addToCart(food)">Add To Cart</button></p>
                 </li>
 
             </ul>

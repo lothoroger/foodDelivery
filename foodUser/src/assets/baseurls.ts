@@ -9,7 +9,6 @@ export class BaseUrls {
 
 
   public static getUrl(key: string): string { return `${this.BASE_HREF}/${key}/get`; }
-  public static getUrlById(key: string): string { return `${this.BASE_HREF}/${key}/get/{id}`; }
   public static getAddUrl(key: string): string { return `${this.BASE_HREF}/${key}/add`; }
   public static getUpdateUrl(key: string): string { return `${this.BASE_HREF}/${key}/update`; }
   public static getDeleteUrl(key: string): string { return `${this.BASE_HREF}/${key}/delete`; }

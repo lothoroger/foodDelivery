@@ -31,16 +31,17 @@ export class CustomersComponent implements OnInit {
 
   }
 
-  openModalUpdate(modal: any, cust: Customers) {
+  openModal(modal: any, cust: Customers | null = null) {
 
     console.log('CustObj', cust);
     this.initializeModal(cust);
     this.modalService.open(modal);
   }
 
-  initializeModal(cust: Customers) {
+  initializeModal(cust: Customers | null) {
     if (cust === null) {
       this.custForm = this.fb.group({
+        custId: [null],
         firstname: ["", Validators.required],
         lastname: ["", Validators.required],
         email: ["", Validators.required],
@@ -54,6 +55,7 @@ export class CustomersComponent implements OnInit {
     } else {
 
       this.custForm = this.fb.group({
+        custId: [cust.custId],
         firstname: [cust.firstname, Validators.required],
         lastname: [cust.lastname, Validators.required],
         email: [cust.email, Validators.required],
@@ -67,27 +69,7 @@ export class CustomersComponent implements OnInit {
     }
   }
 
-  openModalAdd(modal: any) {
 
-
-    this.initializeModala();
-    this.modalService.open(modal);
-  }
-
-  initializeModala() {
-    this.custForm = this.fb.group({
-      firstname: ["", Validators.required],
-      lastname: ["", Validators.required],
-      email: ["", Validators.required],
-      password: ["", Validators.required],
-      phone: ["", Validators.required],
-      address: ["", Validators.required],
-      city: ["", Validators.required],
-      state: ["", Validators.required],
-      zip: ["", Validators.required],
-    });
-
-  }
 }
 
 

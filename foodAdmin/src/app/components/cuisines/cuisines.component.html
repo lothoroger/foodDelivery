@@ -40,7 +40,7 @@
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-primary"
-                                            (click)="openModal(foodModal)">Update Cuisine</button>
+                                            (click)="openModal(foodModal, food)">Update Cuisine</button>
                                         &nbsp;&nbsp; <button type="button" class="btn btn-sm btn-warning">Delete
                                             Cuisine</button>
 
@@ -92,7 +92,7 @@
             </div>
             <div class="form-group col mt-2">
                 <label for="imageFile">Select Image File</label>
-                <input type="file" class="form-control" id="imageurl">
+                <input type="file" class="form-control" id="imageurl" name="imageurl" formControlName="imageurl">
             </div>
         </form>
     </div>

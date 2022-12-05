@@ -17,7 +17,7 @@ import com.foodDelivery.fds.model.Customers;
 import com.foodDelivery.fds.model.Response;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping("/admin")
 public class AdminController {
 	

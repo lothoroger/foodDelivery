@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { OrderComponent } from './components/order/order.component';
-import { OrderdetailComponent } from './components/orderdetail/orderdetail.component';
 import { CartComponent } from './components/cart/cart.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
@@ -21,7 +20,6 @@ import { RegisterComponent } from './components/register/register.component';
     NavbarComponent,
     HomeComponent,
     OrderComponent,
-    OrderdetailComponent,
     CartComponent,
     PaymentComponent,
     CheckoutComponent,

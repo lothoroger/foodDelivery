@@ -9,16 +9,18 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodDelivery.fds.Repository.CuisineRepository;
 import com.foodDelivery.fds.model.Food;
+import com.foodDelivery.fds.model.Food;
 import com.foodDelivery.fds.model.Response;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping("/cuisines")
 public class FoodController {
 	
@@ -32,7 +34,7 @@ public class FoodController {
 	
 
 	@GetMapping(path="/get")
-	  public Response<Food> getFoods() {
+	  public Response<Food> getFood() {
 		ArrayList<Food> foodlist = new ArrayList<Food>();
 		cuisineRepo.findAll().forEach((food)->foodlist.add(food));
 		   return new Response<Food>(101, foodlist.size()+" "+TAG+"s Fetched Successful on "+date,foodlist);
@@ -49,13 +51,31 @@ public class FoodController {
 		}
 	
 	@GetMapping(path="/get/{id}")
-	  public Response<Food> getFoodById(@PathVariable("id") Integer foodId) {
-		ArrayList<Food> data = new ArrayList<Food>();
-		Food foodIds = cuisineRepo.findById(foodId).get();
-		data.add(foodIds);
-		return new Response<Food>(101, foodIds+" "+TAG+"s Fetched Successful on "+date,data);
+	public Response<Food> getFoodById(@PathVariable Integer id) {
+		cuisineRepo.findById(id).get();
+		return new Response<Food>(101, id+" "+TAG+" Found Successful on "+date);
 		}
-
+	
+	
+	@PutMapping(path="/update/{id}")
+	public Response<Food> updateFoodd(@PathVariable Integer id, @RequestParam(name="name", required=false) String name, @RequestParam Double price, @RequestParam(name="imageurl", required=false) String imageurl, @RequestParam(name="origin", required=false) String origin, @RequestParam String addedon,@RequestParam String stock) {
+		
+		cuisineRepo.findById(id).get();
+		Food cuisineupdate = new Food(null,name, price, imageurl, origin, addedon, stock);
+		cuisineRepo.save(cuisineupdate);
+		
+		return new Response<Food>(101, id+" "+TAG+" Found Successful on "+cuisineupdate);
+		}
+	
+	
+	@PostMapping(path="/delete/{id}")
+	public Response<Food> deleteFood(@PathVariable Integer id) {
+		cuisineRepo.findById(id).get();
+		cuisineRepo.deleteById(id);
+		return new Response<Food>(101, id+" "+TAG+" Deleted Successful on "+date);
+		}
+	
+	
 
 
 	

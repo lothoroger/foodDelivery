@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ import com.foodDelivery.fds.model.Orders;
 import com.foodDelivery.fds.model.Response;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping("/orders")
 public class OrderController {
 	
@@ -55,4 +56,17 @@ public class OrderController {
 		   return new Response<Orders>(101, id+" "+TAG+"s Found Successful on "+date) ;
 		}
 
+
+	@PutMapping(path="/update/{id}")
+	public Response<Orders> updateOrder(@PathVariable Integer id, @RequestParam Integer custId, @RequestParam(name="firstname", required=false) String firstname, 
+			@RequestParam String lastname, @RequestParam(name="email", required=false) String email, @RequestParam(name="foodId", required=false) Integer foodId
+			, @RequestParam String foodname,@RequestParam Integer quantity,@RequestParam Double totalprice,@RequestParam String dateorder) {
+	
+		orderRepo.findById(id).get();
+		Orders orderupdate = new Orders(null,firstname, lastname, email, foodId, foodname, quantity, totalprice, dateorder);
+		orderRepo.save(orderupdate);
+		
+		return new Response<Orders>(101, id+" "+TAG+" Found Successful on "+orderupdate);
+		}
+	
 }

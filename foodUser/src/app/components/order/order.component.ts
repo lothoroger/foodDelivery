@@ -17,25 +17,25 @@ export class OrderComponent implements OnInit {
 
   constructor(private httpClient: HttpClientModule, private foodService: DbService, private cartService: CartService, private router: Router) { }
 
-
   foodForm: FormGroup = new FormGroup({});
-  foodlist: Food[] = [];
+  foodlist: Food[] | undefined;
   updation: boolean = false;
   loader: boolean = false;
 
   ngOnInit(): void {
     this.foodService.getFoods();
-    this.foodService.foodSub.subscribe((data) => {
-      if (data.length !== 0) this.foodlist = data;
+    this.foodService.foodSub.subscribe((list) => {
+      if (list.length !== 0) this.foodlist = list;
 
     })
   }
 
-  /*
-    addToCart() {
-      this.cartService.addToCart(this.food);
-      this.router.navigateByUrl('/cart');
-    } */
+
+
+  addToCart(food: Food) {
+    this.cartService.addToCart(food);
+    this.router.navigateByUrl('/cart');
+  }
 
 }
 

@@ -25,19 +25,19 @@ export class DbService {
         }
       })
   }
-
-  getFoodById(foodId: string) {
-    this.httpClient.get(BaseUrls.getUrlById(BaseUrls.FOODS_GROUPURL))
-      .subscribe({
-        next: ({ code, data, message }: any) => {
-          this.foodSub.next(Object.assign([], data.foodId));
-          this.foodRetrievedBool = true;
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      })
-  }
+  /*
+    getFoodById(foodId: string) {
+      this.httpClient.get(BaseUrls.getUrlById(BaseUrls.FOODS_GROUPURL))
+        .subscribe({
+          next: ({ code, data, message }: any) => {
+            this.foodSub.next(Object.assign([], data.foodId));
+            this.foodRetrievedBool = true;
+          },
+          error: (error) => {
+            console.log(error);
+          }
+        })
+    }*/
 
 }
 
