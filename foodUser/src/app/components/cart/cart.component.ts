@@ -13,12 +13,6 @@ import { CartService } from 'src/app/services/cart.service';
 export class CartComponent implements OnInit {
 
   cart!: Cart;
-  /*constructor(private cartService: CartService) {
-    this.cartService.getCartObservable().subscribe((cart) => {
-      this.cart = cart;
-    })
-  }*/
-
   food!: Food;
   constructor(private cartService: CartService, private router: Router) {
 

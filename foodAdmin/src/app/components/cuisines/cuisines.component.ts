@@ -1,10 +1,12 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
+//import { Toast } from 'ngx-toastr';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Food } from 'src/app/model/Food';
 import { DBService } from 'src/app/services/db.service';
+import { BaseUrls } from 'src/assets/baseurls';
 
 
 @Component({
@@ -17,14 +19,16 @@ import { DBService } from 'src/app/services/db.service';
 })
 export class CuisinesComponent implements OnInit {
 
-  public foodObservable: Observable<any[]> = new Observable();
+
+  foodSub: BehaviorSubject<Food[]> = new BehaviorSubject<Food[]>([]);
+  foodRetrievedBool: boolean = false;
 
 
-  constructor(private httpClient: HttpClientModule, private foodService: DBService, private modalService: NgbModal, private fb: FormBuilder) { }
+
+  constructor(private http: HttpClient, private foodService: DBService, private modalService: NgbModal, private fb: FormBuilder) { }
 
   foodlist!: Food[] | undefined;
   foodForm: FormGroup = new FormGroup({});
-  //foodlist: Food[] = [];
   updation: boolean = false;
   loader: boolean = false;
 
@@ -39,14 +43,15 @@ export class CuisinesComponent implements OnInit {
 
 
   openModal(modal: any, foodObj: Food | null = null) {
-    console.log('FoodObj', foodObj);
-    //this.tempImageFiles = [];
+
     this.initializeModal(foodObj);
+
     this.modalService.open(modal);
   }
 
   initializeModal(foodObj: Food | null) {
     if (foodObj == null) {
+      this.updation = false;
       this.foodForm = this.fb.group({
         name: ["", Validators.required],
         origin: ["", Validators.required],
@@ -56,7 +61,9 @@ export class CuisinesComponent implements OnInit {
         imageurl: [""],
       });
     } else {
+      this.updation = true;
       this.foodForm = this.fb.group({
+        foodId: [foodObj.foodId],
         name: [foodObj.name, Validators.required],
         origin: [foodObj.origin, Validators.required],
         price: [foodObj.price, Validators.required],
@@ -69,67 +76,65 @@ export class CuisinesComponent implements OnInit {
     }
   }
 
+  deleteFood(id: any) {
+    this.http.get(`${BaseUrls.getDeleteUrl(BaseUrls.FOODS_GROUPURL)}/${id}`)
+      .subscribe({
+        next: (value) => {
+          this.foodlist?.splice(id, 1);
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      })
+
+  }
 
 
 
+  saveFood() {
+
+    if (this.updation == true) {
+
+      this.http.put(`${BaseUrls.getUpdateUrl(BaseUrls.FOODS_GROUPURL)}/${this.foodForm.value.foodId}`, this.foodForm.value)
+        .subscribe({
+          next: ({ code, data, message }: any) => {
+            console.log('Update Food', data)
+            localStorage.setItem("food", JSON.stringify(this.foodForm.value));
+          },
+          error: (error) => {
+            console.log(error);
+            console.log('Update Food error', this.foodForm.value);
+          }
+        })
 
 
-}
-/*
-  openImageModal(modal: any, imageUrls: string[], thumbnailImageIdx: number) {
-    this.tempImageFiles = [...imageUrls];
-    this.thumbnailImageIdx = thumbnailImageIdx;
-    // this.modalService.open(modal, {
-    size: "xl",
-      scrollable: true
-  });
-}
- 
-openImage(url: string) {
-  window.open(url, "_blank")
-}
- 
-viewProductDetails(modal: any, productObj: Products) {
-  this.productModel = productObj;
-  this.modalService.open(modal, { size: 'lg' });
-}
- 
 
-onSelectOption(category: Category | Event | undefined) {
-  // this.productForm.patchValue({
-  //   category: this.categories.find(x => x.categoryId === category.categoryId)
-  // })
-}
- 
-checkImageFileType(event: any) {
-  let fileList: File[] = Object.assign([], event.target.files);
-  fileList.forEach((file: any, idx: number) => {
-    if (
-      file.type == "image/png" ||
-      file.type == "image/jpeg" ||
-      file.type == "image/jpg"
-    ) {
-      this.tempImageFiles.push(file);
     } else {
-      // this.toast.warning("Only .png/.jpeg/.jpg file format accepted!!", file.name + " will not accepted.");
+
+      this.http.post(`${BaseUrls.getAddUrl(BaseUrls.FOODS_GROUPURL)}`, this.foodForm.value)
+        .subscribe({
+          next: ({ code, message, data }: any) => {
+            console.log("Adding Food ", this.foodForm.value);
+            localStorage.setItem("Data", JSON.stringify(data));
+          },
+          error: (error) => {
+            console.log("Error ", error);
+
+          }
+
+        })
+
     }
-  });
+
+  }
+
+
+
 }
- 
- 
-removeImage(idx: number) {
-  this.tempImageFiles.splice(idx, 1);
-}
- 
-changeThumbnailImageIdx(idx: number) {
-  this.productForm.patchValue({
-    thumbnailImage: idx
-  })
-}
- 
-compareByCategoryId(category1: Category, category2: Category) {
-  return category1 && category2 && category1.categoryId === category2.categoryId;
-}
-*/
+
+
+
+
+
 
 

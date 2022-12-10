@@ -10,6 +10,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { CuisinesComponent } from './components/cuisines/cuisines.component';
 import { OrdersComponent } from './components/orders/orders.component';
 
+
 const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
   { path: "home", component: HomeComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: "change-password", component: ChangePasswordComponent },
   { path: "register", component: RegisterComponent },
   { path: "orders", component: OrdersComponent }
+
 
 ];
 

@@ -17,6 +17,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthComponent } from './components/auth/auth.component';
 import { OrdersComponent } from './components/orders/orders.component';
+import { BaseUrls } from 'src/assets/baseurls';
+
 
 
 
@@ -35,6 +37,7 @@ import { OrdersComponent } from './components/orders/orders.component';
     OrdersComponent
 
 
+
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,7 @@ import { OrdersComponent } from './components/orders/orders.component';
     ReactiveFormsModule
 
   ],
-  providers: [AuthService, DBService],
+  providers: [AuthService, DBService, BaseUrls],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

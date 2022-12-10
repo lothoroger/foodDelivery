@@ -3,7 +3,7 @@ import { Admin } from 'src/app/model/Admin';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-//import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { BaseUrls } from 'src/assets/baseurls';
 
@@ -28,7 +28,7 @@ export class LoginComponent {
 
   constructor(
     private authorize: AuthService,
-    // private toast: ToastrService,
+    private toast: ToastrService,
     private http: HttpClient,
     private router: Router
   ) { }
@@ -40,7 +40,7 @@ export class LoginComponent {
 
   loginAdmin = () => {
     if (this.loginForm.invalid) {
-      // this.toast.info("All Field Required", "");
+      this.toast.info("All Field Required", "");
       return;
     }
     this.authorize.loginAdmin(this.loginForm.value);

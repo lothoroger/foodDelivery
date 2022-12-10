@@ -43,7 +43,7 @@ public class FoodController {
 	
 	
 	@PostMapping(path="/add")
-	public Response<Food> addFood(@RequestParam(name="name", required=false) String name, @RequestParam Double price, @RequestParam(name="imageurl", required=false) String imageurl, @RequestParam(name="origin", required=false) String origin, @RequestParam String addedon,@RequestParam String stock) {
+	public Response<Food> addFood(@RequestParam(name="name", required=false) String name, @RequestParam(name="price", required=false) Double price, @RequestParam(name="imageurl", required=false) String imageurl, @RequestParam(name="origin", required=false) String origin, @RequestParam(name="addedon", required=false)  String addedon,@RequestParam(name="stock", required=false)  String stock) {
 		
 		Food afood = new Food(null,name, price, imageurl, origin, addedon, stock);
 		cuisineRepo.save(afood);
@@ -51,27 +51,34 @@ public class FoodController {
 		}
 	
 	@GetMapping(path="/get/{id}")
-	public Response<Food> getFoodById(@PathVariable Integer id) {
+	public Response<Food> getFoodById(@PathVariable("id") Integer id) {
 		cuisineRepo.findById(id).get();
 		return new Response<Food>(101, id+" "+TAG+" Found Successful on "+date);
 		}
 	
 	
 	@PutMapping(path="/update/{id}")
-	public Response<Food> updateFoodd(@PathVariable Integer id, @RequestParam(name="name", required=false) String name, @RequestParam Double price, @RequestParam(name="imageurl", required=false) String imageurl, @RequestParam(name="origin", required=false) String origin, @RequestParam String addedon,@RequestParam String stock) {
+	public Response<Food> updateFood(@PathVariable("id") Integer id, @RequestParam(name="name", required=false) String name, @RequestParam(name="price", required=false) Double price, @RequestParam(name="imageurl", required=false) String imageurl, @RequestParam(name="origin", required=false) String origin, @RequestParam(name="addedon", required=false)  String addedon,@RequestParam(name="stock", required=false)  String stock) {
 		
-		cuisineRepo.findById(id).get();
-		Food cuisineupdate = new Food(null,name, price, imageurl, origin, addedon, stock);
-		cuisineRepo.save(cuisineupdate);
+		Food foodupdate = cuisineRepo.findById(id).get();
+		foodupdate.setName(name);
+		foodupdate.setPrice(price);
+		foodupdate.setOrigin(origin);
+		foodupdate.setStock(stock);
+	    foodupdate.setaddedon(addedon);
+			
+		System.out.printf("Food Update", foodupdate);
 		
-		return new Response<Food>(101, id+" "+TAG+" Found Successful on "+cuisineupdate);
+		
+		return new Response<Food>(101, id+" "+TAG+" Updated Successful on "+foodupdate);
 		}
 	
 	
-	@PostMapping(path="/delete/{id}")
-	public Response<Food> deleteFood(@PathVariable Integer id) {
-		cuisineRepo.findById(id).get();
-		cuisineRepo.deleteById(id);
+	@GetMapping(path="/delete/{id}")
+	public Response<Food> deleteFood(@PathVariable("id") Integer id) {
+		Food foodel = new Food();
+		foodel.setFoodId(id);
+		cuisineRepo.delete(foodel);
 		return new Response<Food>(101, id+" "+TAG+" Deleted Successful on "+date);
 		}
 	

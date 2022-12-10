@@ -1,7 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-//import { ToastrService } from 'ngx-toastr';
-//import { AuthService } from 'src/app/services/auth.service'; 
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { BaseUrls } from 'src/assets/baseurls';
+
 
 @Component({
   selector: 'app-login',
@@ -13,25 +16,38 @@ export class LoginComponent implements OnInit {
   errorMsg: string | undefined;
   loginProcess: boolean = false;
 
+
+  constructor(
+    private authorize: AuthService,
+    private http: HttpClient,
+    private router: Router,
+    private fb: FormBuilder
+  ) { }
+
+
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required])
   })
 
-  constructor(
-    // private authService: AuthService,
-    // private toast: ToastrService
 
-  ) { }
+
+
+
+
+
+
+
 
   ngOnInit(): void {
   }
-  /*
-    loginUser = () => {
-      if (this.loginForm.invalid) {
-        this.toast.info("All Field Rquired", "");
-        return;
-      }
-      //this.authService.loginUser(this.loginForm.value);
-    } */
+
+
+  loginCustomer = () => {
+    if (this.loginForm.invalid) {
+      // this.toast.info("All Field Required", "");
+      return;
+    }
+    this.authorize.loginCustomer();
+  }
 }

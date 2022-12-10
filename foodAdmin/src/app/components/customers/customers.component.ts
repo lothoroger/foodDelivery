@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { Customers } from 'src/app/model/Customers';
 import { DBService } from 'src/app/services/db.service';
+import { BaseUrls } from 'src/assets/baseurls';
 
 
 @Component({
@@ -17,10 +18,10 @@ export class CustomersComponent implements OnInit {
 
   customers: Customers[] = [];
   custForm: FormGroup = new FormGroup({});
-
+  updation: boolean = false;
 
   orderForm: FormGroup = new FormGroup({});
-  constructor(private custService: DBService, private modalService: NgbModal, private fb: FormBuilder) { }
+  constructor(private http: HttpClient, private baseurl: BaseUrls, private custService: DBService, private modalService: NgbModal, private fb: FormBuilder) { }
 
 
   ngOnInit(): void {
@@ -29,10 +30,22 @@ export class CustomersComponent implements OnInit {
       if (data.length !== 0) this.customers = data;
     })
 
+
   }
 
-  openModal(modal: any, cust: Customers | null = null) {
+  customer = {
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    phone: '',
+    address: '',
+    city: '',
+    state: '',
+    zip: ''
+  };
 
+  openModal(modal: any, cust: Customers | null = null) {
     console.log('CustObj', cust);
     this.initializeModal(cust);
     this.modalService.open(modal);
@@ -40,6 +53,7 @@ export class CustomersComponent implements OnInit {
 
   initializeModal(cust: Customers | null) {
     if (cust === null) {
+      this.updation = false;
       this.custForm = this.fb.group({
         custId: [null],
         firstname: ["", Validators.required],
@@ -53,7 +67,7 @@ export class CustomersComponent implements OnInit {
         zip: ["", Validators.required],
       });
     } else {
-
+      this.updation = true;
       this.custForm = this.fb.group({
         custId: [cust.custId],
         firstname: [cust.firstname, Validators.required],
@@ -65,17 +79,41 @@ export class CustomersComponent implements OnInit {
         city: [cust.city, Validators.required],
         state: [cust.state, Validators.required],
         zip: [cust.zip, Validators.required],
-      });
+      }
+      );
     }
   }
 
 
+  saveCustomer() {
+
+    if (this.updation == true) {
+      console.log('Update Customer ', this.customer);
+      this.custService.updateCustomer(this.customer).subscribe(x => console.log(x));
+
+    } else {
+      console.log('Update Customer ', this.customer);
+      this.custService.addCustomer(this.customer).subscribe(x => console.log(x));
+    }
+  }
+
+
+
+  deleteCustomer(id: any) {
+    this.customers = this.customers.filter(x => x.custId != id)
+    this.http.get(`${BaseUrls.getDeleteUrl(BaseUrls.CUSTOMERS_GROUPURL)}/${id}`)
+      .subscribe({
+        next: (value) => {
+          this.customers.splice(id, 1)
+        },
+        error: (error) => {
+          console.log("Error ", error);
+        }
+      })
+
+  }
+
 }
-
-
-
-
-
 
 
 /*

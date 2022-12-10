@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpHeader } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 //import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { BaseUrls } from 'src/assets/baseurls';
 import { Admin } from '../model/Admin';
 import { Customers } from '../model/Customers';
@@ -10,10 +11,12 @@ import { Orders } from '../model/Orders';
 
 
 
+
 export class Response {
   code: any;
   message: any;
   data: any[] = [];
+  list: any[] = [];
 }
 
 @Injectable({
@@ -22,7 +25,8 @@ export class Response {
 
 
 export class DBService {
-
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
+  updation: boolean = false;
   adminsSub: BehaviorSubject<Admin[]> = new BehaviorSubject<Admin[]>([]);
   adminRetrievedBool: boolean = false;
 
@@ -34,8 +38,6 @@ export class DBService {
 
   orderSub: BehaviorSubject<Orders[]> = new BehaviorSubject<Orders[]>([]);
   orderRetrievedBool: boolean = false;
-
-
   constructor(private httpClient: HttpClient) { }
 
 
@@ -95,9 +97,14 @@ export class DBService {
   }
 
 
-
-
-
+  addCustomer(data: any) {
+    console.log("DbService Add:", data);
+    return this.httpClient.post(BaseUrls.getAddUrl(BaseUrls.CUSTOMERS_GROUPURL), data);
+  }
+  updateCustomer(data: any) {
+    console.log("DbService Update:", data);
+    return this.httpClient.put(BaseUrls.getUpdateUrl(BaseUrls.CUSTOMERS_GROUPURL), data);
+  }
 
 }
 
