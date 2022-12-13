@@ -1,34 +1,29 @@
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-//import { Toast } from 'ngx-toastr';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Food } from 'src/app/model/Food';
 import { DBService } from 'src/app/services/db.service';
 import { BaseUrls } from 'src/assets/baseurls';
 
 
 @Component({
-
-
-
-  selector: 'app-cuisines',
+  selector: 'app-cuisine',
   templateUrl: './cuisines.component.html',
   styleUrls: ['./cuisines.component.css']
 })
 export class CuisinesComponent implements OnInit {
 
-
-  foodSub: BehaviorSubject<Food[]> = new BehaviorSubject<Food[]>([]);
-  foodRetrievedBool: boolean = false;
-
+  public foodObservable: Observable<any[]> = new Observable();
 
 
   constructor(private http: HttpClient, private foodService: DBService, private modalService: NgbModal, private fb: FormBuilder) { }
 
-  foodlist!: Food[] | undefined;
+
   foodForm: FormGroup = new FormGroup({});
+  foodlist: Food[] = [];
+
   updation: boolean = false;
   loader: boolean = false;
 
@@ -41,13 +36,11 @@ export class CuisinesComponent implements OnInit {
   }
 
 
-
-  openModal(modal: any, foodObj: Food | null = null) {
-
-    this.initializeModal(foodObj);
-
-    this.modalService.open(modal);
+  openModal(modal: any, food: Food | null = null) {
+    this.initializeModal(food);
+    this.modalService.open(modal, { size: "xl" });
   }
+
 
   initializeModal(foodObj: Food | null) {
     if (foodObj == null) {
@@ -60,6 +53,7 @@ export class CuisinesComponent implements OnInit {
         addedon: ["", Validators.required],
         imageurl: [""],
       });
+
     } else {
       this.updation = true;
       this.foodForm = this.fb.group({
@@ -69,14 +63,63 @@ export class CuisinesComponent implements OnInit {
         price: [foodObj.price, Validators.required],
         stock: [foodObj.stock],
         addedon: [foodObj.addedon, Validators.required],
-        imageurl: [foodObj.imageurl] + '.jpg',
+        imageurl: [foodObj.imageurl],
+
       });
-
-
     }
   }
 
+  saveCuisine() {
+    if (this.updation == true) {
+      this.http.put(`${BaseUrls.getUpdateUrl(BaseUrls.FOODS_GROUPURL)}/${this.foodForm.value.foodId}`, this.foodForm.value)
+        .subscribe({
+          next: ({ code, data, message }: any) => {
+            console.log('Update Cuisine', data)
+            localStorage.setItem("Cuisine update", JSON.stringify(this.foodForm.value));
+          },
+          error: (error) => {
+            console.log(error);
+            console.log('Update Cuisine error', this.foodForm.value);
+          }
+        })
+    } else {
+      console.log('Add Cuisine ', this.foodForm.value)
+
+      this.http.post(`${BaseUrls.getAddUrl(BaseUrls.FOODS_GROUPURL)}`, this.foodForm.value)
+        .subscribe({
+          next: ({ code, message, data }: any) => {
+            console.log("Adding Food ", this.foodForm.value);
+            localStorage.setItem("Data", JSON.stringify(data));
+
+          },
+          error: (error) => {
+            console.log("Error ", error);
+
+          }
+        })
+
+    }
+    this.modalService.dismissAll();
+    this.foodService.getFoods();
+  }
+
+
+
   deleteFood(id: any) {
+    console.log('Food list delete', id)
+    /*this.foodlist = this.foodlist.filter(x => x.foodId != id)
+    this.http.get(`${BaseUrls.getDeleteUrl(BaseUrls.FOODS_GROUPURL)}/${id}`)
+      .subscribe({
+        next: (value) => {
+          this.foodlist.splice(id, 1)
+        },
+        error: (error) => {
+          console.log("Error on Delete ", error);
+        }
+      })
+*/
+
+    this.foodlist = this.foodlist.filter(x => x.foodId != id)
     this.http.get(`${BaseUrls.getDeleteUrl(BaseUrls.FOODS_GROUPURL)}/${id}`)
       .subscribe({
         next: (value) => {
@@ -87,54 +130,8 @@ export class CuisinesComponent implements OnInit {
         }
       })
 
-  }
-
-
-
-  saveFood() {
-
-    if (this.updation == true) {
-
-      this.http.put(`${BaseUrls.getUpdateUrl(BaseUrls.FOODS_GROUPURL)}/${this.foodForm.value.foodId}`, this.foodForm.value)
-        .subscribe({
-          next: ({ code, data, message }: any) => {
-            console.log('Update Food', data)
-            localStorage.setItem("food", JSON.stringify(this.foodForm.value));
-          },
-          error: (error) => {
-            console.log(error);
-            console.log('Update Food error', this.foodForm.value);
-          }
-        })
-
-
-
-    } else {
-
-      this.http.post(`${BaseUrls.getAddUrl(BaseUrls.FOODS_GROUPURL)}`, this.foodForm.value)
-        .subscribe({
-          next: ({ code, message, data }: any) => {
-            console.log("Adding Food ", this.foodForm.value);
-            localStorage.setItem("Data", JSON.stringify(data));
-          },
-          error: (error) => {
-            console.log("Error ", error);
-
-          }
-
-        })
-
-    }
 
   }
-
 
 
 }
-
-
-
-
-
-
-

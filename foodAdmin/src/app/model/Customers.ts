@@ -1,5 +1,5 @@
 export class Customers {
-    custId!: number;
+    custId!: Number;
     firstname!: String;
     lastname!: String;
     email!: String;

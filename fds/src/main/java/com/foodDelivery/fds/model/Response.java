@@ -8,7 +8,7 @@ public class Response<T> {
 	public Integer code;
 	public String message;
 	private List<T> data;
-	private String cust;
+	private String adata ;
 	
 	
 	public Response() {}
@@ -17,7 +17,7 @@ public class Response<T> {
 		super();
 		this.code = code;
 		this.message = message;
-		this.cust = cust;
+		this.adata = data;
 	}
 	
 	public Response(Integer code, String message, List<T> data) {

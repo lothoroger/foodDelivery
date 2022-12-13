@@ -33,7 +33,7 @@ export class AuthComponent {
     this.http.post(BaseUrls.getLoginUrl(BaseUrls.ADMIN_GROUPURL), formData)
       .subscribe({
         next: ({ code, message, data }: any) => {
-          localStorage.setItem("authCodes", data);
+          localStorage.setItem("authCode", code);
           this.router.navigate(['/]', { replaceUrl: true }])
           this.toast.success(message, "Login Successful");
         },

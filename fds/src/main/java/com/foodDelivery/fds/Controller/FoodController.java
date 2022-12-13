@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodDelivery.fds.Repository.CuisineRepository;
+import com.foodDelivery.fds.model.Customers;
 import com.foodDelivery.fds.model.Food;
 import com.foodDelivery.fds.model.Food;
 import com.foodDelivery.fds.model.Response;
@@ -43,11 +45,10 @@ public class FoodController {
 	
 	
 	@PostMapping(path="/add")
-	public Response<Food> addFood(@RequestParam(name="name", required=false) String name, @RequestParam(name="price", required=false) Double price, @RequestParam(name="imageurl", required=false) String imageurl, @RequestParam(name="origin", required=false) String origin, @RequestParam(name="addedon", required=false)  String addedon,@RequestParam(name="stock", required=false)  String stock) {
-		
-		Food afood = new Food(null,name, price, imageurl, origin, addedon, stock);
-		cuisineRepo.save(afood);
-		return new Response<Food>(101, afood+" "+TAG+" Fetched Successful on "+date);
+	//public Response<Food> addFood(@RequestParam(name="name", required=false) String name, @RequestParam(name="price", required=false) Double price, @RequestParam(name="imageurl", required=false) String imageurl, @RequestParam(name="origin", required=false) String origin, @RequestParam(name="addedon", required=false)  String addedon,@RequestParam(name="stock", required=false)  String stock) {
+	public Response<Food> addFood(@RequestBody Food data){
+		cuisineRepo.save(data);
+		return new Response<Food>(101, data+" "+TAG+" Added Successful on "+date);
 		}
 	
 	@GetMapping(path="/get/{id}")
@@ -58,32 +59,27 @@ public class FoodController {
 	
 	
 	@PutMapping(path="/update/{id}")
-	public Response<Food> updateFood(@PathVariable("id") Integer id, @RequestParam(name="name", required=false) String name, @RequestParam(name="price", required=false) Double price, @RequestParam(name="imageurl", required=false) String imageurl, @RequestParam(name="origin", required=false) String origin, @RequestParam(name="addedon", required=false)  String addedon,@RequestParam(name="stock", required=false)  String stock) {
-		
-		Food foodupdate = cuisineRepo.findById(id).get();
-		foodupdate.setName(name);
-		foodupdate.setPrice(price);
-		foodupdate.setOrigin(origin);
-		foodupdate.setStock(stock);
-	    foodupdate.setaddedon(addedon);
-			
-		System.out.printf("Food Update", foodupdate);
+	
+      public Response<Food> updateFood(@PathVariable("id") Integer id, @RequestBody Food data) {
+					
+		cuisineRepo.save(data);
+		System.out.printf("Food Update saved ", data);
 		
 		
-		return new Response<Food>(101, id+" "+TAG+" Updated Successful on "+foodupdate);
+		return new Response<Food>(101, id+" "+TAG+" Updated Successful on "+data);
 		}
 	
 	
 	@GetMapping(path="/delete/{id}")
-	public Response<Food> deleteFood(@PathVariable("id") Integer id) {
-		Food foodel = new Food();
-		foodel.setFoodId(id);
-		cuisineRepo.delete(foodel);
+	public Response<Food> deleteFood(@PathVariable Integer id) {
+		
+		cuisineRepo.deleteById(id);
 		return new Response<Food>(101, id+" "+TAG+" Deleted Successful on "+date);
 		}
 	
 	
 
-
+	
+	
 	
 }

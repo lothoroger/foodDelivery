@@ -9,7 +9,3 @@ td img {
     overflow: hidden;
     color: #0c0d3d;
 }
-
-.modal-backdrop {
-    z-index: none;
-}

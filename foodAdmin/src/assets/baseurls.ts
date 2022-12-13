@@ -3,7 +3,7 @@ export class BaseUrls {
   public static readonly BASE_HREF: string = "http://localhost:8082";
   public static readonly FOODS_GROUPURL: string = "cuisines";
   public static readonly CUSTOMERS_GROUPURL: string = "customers";
-  public static readonly ADMIN_GROUPURL: string = "admins";
+  public static readonly ADMIN_GROUPURL: string = "admin";
   public static readonly ORDERS_GROUPURL: string = "orders";
 
 

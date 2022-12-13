@@ -1,7 +1,7 @@
 export class Food {
-  foodId!: any;
+  foodId!: number;
   name!: string;
-  price!: any;
+  price!: number;
   imageurl!: string;
   origin!: string;
   addedon!: string;

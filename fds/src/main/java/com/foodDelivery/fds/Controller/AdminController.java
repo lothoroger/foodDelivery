@@ -38,9 +38,9 @@ public class AdminController {
 		Admin admin = adminRepo.findByEmailAndPassword(email, password).get();
 		
 		if (!admin.getEmail().isEmpty()) {
-			return new Response<Admin>(101, TAG+" +admin+Logged In Successful on "+date);
+			return new Response<Admin>(101, TAG+" "+admin+" Logged In Successful on "+date);
 		} else {
-			return new Response<Admin>(201, TAG+" Authentication Failed on "+date);
+			return new Response<Admin>(201, TAG+" "+admin+" Authentication Failed on "+date);
 		}
 		
 	}
@@ -49,7 +49,7 @@ public class AdminController {
 	public Response<Admin> getAdmin() {
 		ArrayList<Admin> adminlist = new ArrayList<Admin>();
 		adminRepo.findAll().forEach((admin)->adminlist.add(admin));
-		return new Response<Admin>(101, adminlist.size()+" "+TAG+"s Fetched Successful on "+date);
+		return new Response<Admin>(101, adminlist.size()+" "+TAG+"s Fetched Successful on "+date, adminlist);
 		}
 	
 	

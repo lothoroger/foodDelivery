@@ -1,11 +1,12 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 import { Customers } from 'src/app/model/Customers';
 import { DBService } from 'src/app/services/db.service';
 import { BaseUrls } from 'src/assets/baseurls';
+
 
 
 @Component({
@@ -20,37 +21,28 @@ export class CustomersComponent implements OnInit {
   custForm: FormGroup = new FormGroup({});
   updation: boolean = false;
 
-  orderForm: FormGroup = new FormGroup({});
-  constructor(private http: HttpClient, private baseurl: BaseUrls, private custService: DBService, private modalService: NgbModal, private fb: FormBuilder) { }
+  constructor(private custService: DBService,
+    private http: HttpClient,
+    private modalService: NgbModal,
+    private fb: FormBuilder,
+    private toast: ToastrService
 
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.custService.getCustomers();
-    this.custService.customerSub.subscribe((data) => {
+    this.custService.customers.subscribe((data) => {
       if (data.length !== 0) this.customers = data;
     })
-
-
   }
 
-  customer = {
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    phone: '',
-    address: '',
-    city: '',
-    state: '',
-    zip: ''
-  };
 
   openModal(modal: any, cust: Customers | null = null) {
-    console.log('CustObj', cust);
     this.initializeModal(cust);
-    this.modalService.open(modal);
+    this.modalService.open(modal, { size: "xl" });
   }
-
   initializeModal(cust: Customers | null) {
     if (cust === null) {
       this.updation = false;
@@ -66,6 +58,7 @@ export class CustomersComponent implements OnInit {
         state: ["", Validators.required],
         zip: ["", Validators.required],
       });
+
     } else {
       this.updation = true;
       this.custForm = this.fb.group({
@@ -79,24 +72,46 @@ export class CustomersComponent implements OnInit {
         city: [cust.city, Validators.required],
         state: [cust.state, Validators.required],
         zip: [cust.zip, Validators.required],
-      }
-      );
+      });
+      console.log('customers component update ', this.custForm.value);
     }
   }
 
 
   saveCustomer() {
-
     if (this.updation == true) {
-      console.log('Update Customer ', this.customer);
-      this.custService.updateCustomer(this.customer).subscribe(x => console.log(x));
-
+      this.http.put(`${BaseUrls.getUpdateUrl(BaseUrls.CUSTOMERS_GROUPURL)}/${this.custForm.value.custId}`, this.custForm.value)
+        .subscribe({
+          next: ({ code, data, message }: any) => {
+            console.log('Update Customer ts ', this.custForm.value);
+            localStorage.setItem("Customer", JSON.stringify(this.custForm.value));
+          },
+          error: (error) => {
+            console.log(error);
+            console.log('Update Customer error', this.custForm.value);
+          }
+        })
     } else {
-      console.log('Update Customer ', this.customer);
-      this.custService.addCustomer(this.customer).subscribe(x => console.log(x));
-    }
-  }
+      console.log('Add Customer ', this.custForm.value)
 
+
+      this.http.post(`${BaseUrls.getAddUrl(BaseUrls.CUSTOMERS_GROUPURL)}`, this.custForm.value)
+        .subscribe({
+          next: ({ code, message, data }: any) => {
+            console.log("Adding Food ", this.custForm.value);
+            localStorage.setItem("Data", JSON.stringify(data));
+          },
+          error: (error) => {
+            console.log("Error ", error);
+
+          }
+        })
+    }
+
+    this.modalService.dismissAll();
+    this.custService.getCustomers();
+
+  }
 
 
   deleteCustomer(id: any) {
@@ -105,18 +120,23 @@ export class CustomersComponent implements OnInit {
       .subscribe({
         next: (value) => {
           this.customers.splice(id, 1)
+          this.toast.success(`Customer with ${id}`, 'Deleted Successfully');
         },
         error: (error) => {
           console.log("Error ", error);
+          this.toast.warning("Something went wrong!! Please Try Again...", "Failed");
+
         }
       })
 
   }
 
+
 }
 
 
 /*
+
 
 updateCustomer() {
   let formData: FormData = new FormData();

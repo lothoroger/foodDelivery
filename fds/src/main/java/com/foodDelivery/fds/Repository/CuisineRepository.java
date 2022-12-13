@@ -7,5 +7,5 @@ import com.foodDelivery.fds.model.Food;
 
 @Repository
 public interface CuisineRepository extends CrudRepository<Food, Integer> {
-
+	
 }

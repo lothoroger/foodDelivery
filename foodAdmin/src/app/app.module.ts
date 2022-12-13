@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -13,12 +13,11 @@ import { CuisinesComponent } from './components/cuisines/cuisines.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { DBService } from './services/db.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthComponent } from './components/auth/auth.component';
-import { OrdersComponent } from './components/orders/orders.component';
-import { BaseUrls } from 'src/assets/baseurls';
-
+import { ToastrModule } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -33,22 +32,27 @@ import { BaseUrls } from 'src/assets/baseurls';
     ChangePasswordComponent,
     CuisinesComponent,
     RegisterComponent,
-    AuthComponent,
-    OrdersComponent
-
+    AuthComponent
 
 
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      countDuplicates: true,
+      tapToDismiss: true
+    }),
   ],
-  providers: [AuthService, DBService, BaseUrls],
+  providers: [AuthService, DBService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

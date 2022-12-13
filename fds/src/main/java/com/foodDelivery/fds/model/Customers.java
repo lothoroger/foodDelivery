@@ -40,6 +40,10 @@ public class Customers {
 	}
 
 	
+	
+	
+	
+	
 	public Integer getCustId() {
 		return custId;
 	}

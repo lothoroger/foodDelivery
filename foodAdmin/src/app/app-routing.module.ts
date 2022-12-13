@@ -8,8 +8,6 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CuisinesComponent } from './components/cuisines/cuisines.component';
-import { OrdersComponent } from './components/orders/orders.component';
-
 
 const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -18,9 +16,7 @@ const routes: Routes = [
   { path: "customers", component: CustomersComponent },
   { path: "login", component: LoginComponent },
   { path: "change-password", component: ChangePasswordComponent },
-  { path: "register", component: RegisterComponent },
-  { path: "orders", component: OrdersComponent }
-
+  { path: "register", component: RegisterComponent }
 
 ];
 
